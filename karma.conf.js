@@ -1,4 +1,4 @@
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         // base path
         basePath: '',
@@ -15,6 +15,6 @@ module.exports = function(config) {
         // CI: if true, Karma captures browsers, runs the tests and exits
         singleRun: false,
         // LOGGING LEVEL: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_WARN
+        logLevel: config.LOG_DISABLE
     });
 };
