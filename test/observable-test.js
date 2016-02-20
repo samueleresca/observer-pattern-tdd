@@ -25,6 +25,7 @@ describe('ObservableAddObserverTest', function () {
 });
 
 describe('ObservableHasObserverTest', function () {
+
     beforeEach(function () {
         this.observable = new tddjs.util.Observable();
     });
@@ -42,8 +43,8 @@ describe('ObservableHasObserverTest', function () {
     });
 });
 
-
 describe('ObservableNotifyObserversTest', function () {
+
     beforeEach(function () {
         this.observable = new tddjs.util.Observable();
     });
@@ -75,6 +76,30 @@ describe('ObservableNotifyObserversTest', function () {
     });
 
     it("test should notify all even when some fail", function () {
+        var observer1 = function () { throw new Error("Oops"); };
+        var observer2 = function () { observer2.called = true; }
+
+        this.observable.addObserver(observer1);
+        this.observable.addObserver(observer2);
+        this.observable.notifyObservers();
+
+        expect(observer2.called).to.be.ok;
+
     });
+
+    it("test should call observers in the order they were added", function () {
+        var calls = [];
+        var observer1 = function () { calls.push(observer1); };
+        var observer2 = function () { calls.push(observer2); };
+
+        this.observable.addObserver(observer1);
+        this.observable.addObserver(observer2);
+
+        this.observable.notifyObservers();
+
+        assert.deepEqual(observer1, calls[0])
+        assert.deepEqual(observer2, calls[1])
+
+    })
 
 });
